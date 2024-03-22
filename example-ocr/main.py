@@ -1,7 +1,10 @@
 import os
 import platform
 from rapidocr_onnxruntime import RapidOCR
+from rapidocr_paddle import RapidOCR as RapidOCRGpu
 
+# import paddle
+# paddle.utils.run_check()
 
 def test_cpu(img_path):
     engine = RapidOCR()
@@ -12,7 +15,7 @@ def test_cpu(img_path):
 
 
 def test_gpu(img_path):
-    engine = RapidOCR(use_gpu=True)
+    engine = RapidOCRGpu(det_use_cuda=True, cls_use_cuda=True, rec_use_cuda=True)
     result, elapse = engine(img_path)
     for item in result:
         print(f"score={item[2]} \t text={str(item[1])}")
